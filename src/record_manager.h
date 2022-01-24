@@ -19,7 +19,7 @@ class RecordManager {
 private:
   BufferManager *hdl_;
   CatalogManager *cm_;
-  // std::string db_name_;
+  std::string db_name_;
 
 public:
   RecordManager(CatalogManager *cm, BufferManager *hdl, std::string db)

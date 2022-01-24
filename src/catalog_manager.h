@@ -56,7 +56,7 @@ private:
     ar &db_name_;
     ar &tbs_;
   }
-  // std::string db_name_;
+  std::string db_name_;
   std::vector<Table> tbs_;
 
 public:
