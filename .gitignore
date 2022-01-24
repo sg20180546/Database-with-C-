@@ -17,3 +17,9 @@
 # Mac files
 .DS_Store
 /Debug
+
+src
+MiniDB.xcodeproj
+.vscode
+.cproject
+.project
