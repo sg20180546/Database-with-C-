@@ -5,8 +5,8 @@
 #include <string>
 #include <vector>
 
-// #include "minidb_api.h"
-// #include "sql_statement.h"
+#include "minidb_api.h"
+#include "sql_statement.h"
 
 class Interpreter {
 private:

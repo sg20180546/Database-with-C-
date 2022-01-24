@@ -15,5 +15,7 @@ class TableNotExistException:public std::exception{};
 
 class TableAlreadyExistsException: public std::exception{};
 
+class OneIndexEachTableException: public std::exception{};
+
 
 #endif

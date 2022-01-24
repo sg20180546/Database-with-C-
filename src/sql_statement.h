@@ -157,7 +157,7 @@ public:
 
 class SQLCreateDatabase : public SQL {
 private:
-  std::string db_name_;
+  // std::string db_name_;
 
 public:
   SQLCreateDatabase(std::vector<std::string> sql_vector) { Parse(sql_vector); }
@@ -168,7 +168,7 @@ public:
 
 class SQLDropDatabase : public SQL {
 private:
-  std::string db_name_;
+  // std::string db_name_;
 
 public:
   SQLDropDatabase(std::vector<std::string> sql_vector) { Parse(sql_vector); }
@@ -201,7 +201,7 @@ public:
 
 class SQLUse : public SQL {
 private:
-  std::string db_name_;
+  // std::string db_name_;
 
 public:
   SQLUse(std::vector<std::string> sql_vector) { Parse(sql_vector); }

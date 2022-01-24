@@ -13,13 +13,13 @@
 using namespace std;
 
 Interpreter::Interpreter():sql_type_(-1){
-    const char* p= getenv("MiniEnv");
+    string p= string(getenv("MiniEnv"));
     api= new MiniDBAPI(p);
     // printf("%s",p);
 }
 
 Interpreter::~Interpreter(){
-    // delete api;
+    delete api;
     }
 
 vector<string> split(string str,string sep){
@@ -142,11 +142,21 @@ void Interpreter::Run(){
     try{
         switch(sql_type_){
             case 10:{
-
+                api->Quit();
+                exit(0);
             } break;
+            case 20:{
+                api->Help();
+            } break;
+            case 30:{
+                SQLCreateDatabase *st=new SQLCreateDatabase(sql_vector_);
+                api->CreateDatabase(*st);
+                delete st;
+            } break;
+            
         }
-    }catch(){
-
+    }catch(SyntaxErrorException &e){
+        cerr<<"SynTax Error!"<<endl;
     }
 }
 
@@ -155,6 +165,6 @@ void Interpreter::ExecSQL(string statement){
     FormatSQL();
     TellSQLType();
     cout<<"SQL STATEMENT "<<sql_statement_<<endl;
-    // Run();
+    Run();
     cout<<endl;
 }

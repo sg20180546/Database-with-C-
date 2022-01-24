@@ -19,7 +19,7 @@ class IndexManager {
 private:
   BufferManager *hdl_;
   CatalogManager *cm_;
-  std::string db_name_;
+  // std::string db_name_;
 
 public:
   IndexManager(CatalogManager *cm, BufferManager *hdl, std::string db) {
@@ -43,7 +43,7 @@ private:
   int degree_;
   BufferManager *hdl_;
   CatalogManager *cm_;
-  std::string db_name_;
+  // std::string db_name_;
 
 public:
   BPlusTree(Index *idx, BufferManager *hdl, CatalogManager *cm,
