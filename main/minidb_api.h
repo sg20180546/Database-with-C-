@@ -10,7 +10,7 @@ class MiniDBAPI{
 private:
     std::string path_;
     std::string curr_db_;
-    CatalogManger *cm_;
+    CatalogManager *cm_;
 
 public:
     MiniDBAPI(std::string p);

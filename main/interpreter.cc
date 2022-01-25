@@ -153,7 +153,8 @@ void Interpreter::Run(){
                 api->CreateDatabase(*st);
                 delete st;
             } break;
-            
+            default:
+             break;
         }
     }catch(SyntaxErrorException &e){
         cerr<<"SynTax Error!"<<endl;

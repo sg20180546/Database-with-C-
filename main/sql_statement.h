@@ -8,7 +8,7 @@
 
 class CatalogManger;
 class Database;
-
+class Attribute;
 class SQL{
     protected:
         int sql_type_;
