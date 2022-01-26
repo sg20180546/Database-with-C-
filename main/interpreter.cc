@@ -151,6 +151,10 @@ void Interpreter::Run(){
                 api->CreateDatabase(*st);
                 delete st;
             } break;
+            case 31:{
+                SQLCreateTable *st= new SQLCreateTable(sql_vector_);
+                api->CreateTable(*st);
+            }
             default:
              break;
         }

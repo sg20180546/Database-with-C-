@@ -34,5 +34,18 @@ public:
     void Parse(std::vector<std::string> sql_vector);
 };
 
+class SQLCreateTable: public SQL{
+    private:
+        std::string tb_name_;
+        std::vector<Attribute> attrs_;
+    public:
+        SQLCreateTable(std::vector<std::string> sql_vector){Parse(sql_vector);}
+        std::string tb_name() {return tb_name_;}
+        void set_tb_name(std::string tbname){tb_name_=tbname;}
+        std::vector<Attribute> attrs() {return attrs_;}
+        void set_attrs(std::vector<Attribute> att){attrs_=att;}
+        void Parse(std::vector<std::string> sql_vector);
+};
+
 
 #endif
