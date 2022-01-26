@@ -14,7 +14,7 @@ class BlockInfo;
 
 class FileInfo {
 private:
-  // std::string db_name_;
+  std::string db_name_;
   int type_;               // 0: data file, 1: index file
   std::string file_name_;  // the name of the file
   int record_amount_;      // the number of record in the file

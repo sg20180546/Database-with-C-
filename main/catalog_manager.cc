@@ -5,8 +5,9 @@
 
 using namespace std;
 
-// CatalogManger::CatalogManger(std::string p): path_(p){ReadArchiveFile();}
+CatalogManager::CatalogManager(std::string p): path_(p){}
 
+CatalogManager::~CatalogManager(){}
 
 void CatalogManager::WriteArchiveFile(){
     std::string file_name=path_+"catalog";

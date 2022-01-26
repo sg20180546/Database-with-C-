@@ -1,4 +1,4 @@
-#include "minidb_api.h"
+
 
 #include <fstream>
 #include <iostream>
@@ -8,9 +8,21 @@
 #include <boost/filesystem.hpp>
 
 #include "exceptions.h"
-#include "catalog_manager.h"
-void MiniDBAPI::Help(){
+#include "minidb_api.h"
 
+using namespace std;
+// #include "catalog_manager.h"
+MiniDBAPI::MiniDBAPI(std::string p) : path_(p){cm_= new CatalogManager(p); }
+
+MiniDBAPI::~MiniDBAPI(){
+    delete cm_;
+}
+
+void MiniDBAPI::Help(){
+    std::cout<<"HELP"<<std::endl;
+}
+void MiniDBAPI::Quit(){
+    std::cout<<"Quiting ..."<<std::endl;
 }
 
 void MiniDBAPI::CreateDatabase(SQLCreateDatabase &st){
@@ -18,15 +30,17 @@ void MiniDBAPI::CreateDatabase(SQLCreateDatabase &st){
     std::string folder_name(path_+st.db_name());
     boost::filesystem::path folder_path(folder_name);
 
-    folder_path.imbue(std::locale("en_us.UTF-8"));
-
+    folder_path.imbue(std::locale("en_US.UTF-8"));
+    std::cout<<folder_path<<"1"<<std::endl;
     if(cm_->GetDB(st.db_name()) !=NULL){
         throw DatabaseAlreadyExistsException();
     }
+    // std::cout<<folder_path<<"2"<<std::endl;
     if(boost::filesystem::exists(folder_path)){
         boost::filesystem::remove_all(folder_path);
         std::cout<<"Database folder exists and deleted!"<<std::endl;
     }
+    // std::cout<<folder_path<<std::endl;
     boost::filesystem::create_directories(folder_path);
     std::cout<<"Database folder created"<<std::endl;
     cm_->CreateDatabase(st.db_name());

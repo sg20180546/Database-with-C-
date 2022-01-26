@@ -7,20 +7,36 @@
 
 #include "minidb_api.h"
 #include "sql_statement.h"
-
 class Interpreter {
 private:
-    MiniDBAPI *api;
-    std::string sql_statement_;
-    std::vector<std::string> sql_vector_;
-    int sql_type_;
-    void TellSQLType();
-    void FormatSQL();
-    void Run();
+  MiniDBAPI *api;
+  std::string sql_statement_;
+  std::vector<std::string> sql_vector_;
+  int sql_type_;
+  void TellSQLType();
+  void FormatSQL();
+  void Run();
+
 public:
-    Interpreter();
-    ~Interpreter();
-    void ExecSQL(std::string statement);
+  Interpreter();
+  ~Interpreter();
+  void ExecSQL(std::string statement);
 };
 
-#endif
+#endif /* MINIDB_INTERPRETER_H_ */
+// class Interpreter {
+// private:
+//     MiniDBAPI *api;
+//     std::string sql_statement_;
+//     std::vector<std::string> sql_vector_;
+//     int sql_type_;
+//     void TellSQLType();
+//     void FormatSQL();
+//     void Run();
+// public:
+//     Interpreter();
+//     ~Interpreter();
+//     void ExecSQL(std::string statement);
+// };
+
+// #endif

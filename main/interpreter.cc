@@ -12,15 +12,13 @@
 
 using namespace std;
 
-Interpreter::Interpreter():sql_type_(-1){
-    string p= string(getenv("MiniEnv"));
+Interpreter::Interpreter() : sql_type_(-1) {
+    std::string p="/home/gs201/Desktop/db/";
+//   string p = string(getenv("HOME")) + "/MiniDBData/";
     api= new MiniDBAPI(p);
-    // printf("%s",p);
 }
 
-Interpreter::~Interpreter(){
-    delete api;
-    }
+Interpreter::~Interpreter() { delete api; }
 
 vector<string> split(string str,string sep){
     char *cstr=const_cast<char*>(str.c_str());
@@ -35,14 +33,14 @@ vector<string> split(string str,string sep){
 }
 
 void Interpreter::FormatSQL(){
-    boost::regex reg;
-    reg="[\r\n\t]";
+    boost::regex reg("[\r\n\t]");
+    // reg=;
     sql_statement_=boost::regex_replace(sql_statement_,reg," ");
 
     reg=";.*$";
     sql_statement_=boost::regex_replace(sql_statement_,reg,"");
 
-    reg="(^ +)|(+ $)";
+    reg="(^ +)|( +$)";
     sql_statement_=boost::regex_replace(sql_statement_,reg,"");
 
     reg=" +";
