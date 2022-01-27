@@ -13,8 +13,8 @@
 using namespace std;
 
 Interpreter::Interpreter() : sql_type_(-1) {
-    std::string p="/home/gs201/Desktop/db/";
-//   string p = string(getenv("HOME")) + "/MiniDBData/";
+    // std::string p="/home/gs201/Desktop/db/";
+  string p = string(getenv("MiniEnv"));
     api= new MiniDBAPI(p);
 }
 
@@ -154,6 +154,16 @@ void Interpreter::Run(){
             case 31:{
                 SQLCreateTable *st= new SQLCreateTable(sql_vector_);
                 api->CreateTable(*st);
+                delete st;
+            }
+            case 32: {
+                SQLCreateIndex *st= new SQLCreateIndex(sql_vector_);
+                // 
+            }break;
+            case 60:{
+                SQLUse* st=new SQLUse(sql_vector_);
+                api->Use(*st);
+                delete st;
             }
             default:
              break;

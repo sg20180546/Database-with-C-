@@ -35,3 +35,36 @@ Database* CatalogManager::GetDB(std::string db_name){
 }
 
 Database::Database(std::string dbname) : db_name_(dbname){}
+
+void Database::CreateTable(SQLCreateTable &st){
+    int record_length=0;
+    Table tb;
+    for(int i=0;i<st.attrs().size();++i){
+        tb.AddAttribute(st.attrs()[i]);
+        record_length+=st.attrs()[i].length();
+    }
+    tb.set_tb_name(st.tb_name());
+    tb.set_record_length(record_length);
+    tbs_.push_back(tb);
+}
+
+bool Database::CheckIfIndexExists(std::string index_name){
+    bool exists=false;
+    for(unsigned int i=0;i<tbs_.size();++i){
+        for(unsigned int j=0;j<tbs_[i].ids().size();++j){
+            if (tbs_[i].ids()[j].name() == index_name) {
+                exists = true;
+            }
+        }
+    }
+    return exists;
+}
+
+Table* Database::GetTable(std::string tb_name){
+    for(unsigned int i=0;i<tbs_.size();++i){
+        if(tbs_[i].tb_name()==tb_name){
+            return &tbs_[i];
+        }
+    }
+    return NULL;
+}

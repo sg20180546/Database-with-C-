@@ -46,6 +46,28 @@ class SQLCreateTable: public SQL{
         void set_attrs(std::vector<Attribute> att){attrs_=att;}
         void Parse(std::vector<std::string> sql_vector);
 };
+class SQLCreateIndex: public SQL{
+private:
+    std::string index_name_;
+    std::string tb_name_;
+    std::string col_name_;
+public:
+    SQLCreateIndex(std::vector<std::string> sql_vector){Parse(sql_vector);}
+    void Parse(std::vector<std::string> sql_vector);
+    std::string index_name(){return index_name_;}
+    std::string tb_name(){return tb_name_;}
+    std::string col_name(){return col_name_;}
+};
+
+class SQLUse: public SQL{
+private:
+    std::string db_name_;
+public:
+    SQLUse(std::vector<std::string> sql_vector){Parse(sql_vector);}
+    std::string db_name(){return db_name_;}
+    void set_db_name(std::string dbname){db_name_=dbname;}
+    void Parse(std::vector<std::string> sql_vector);
+};
 
 
 #endif
