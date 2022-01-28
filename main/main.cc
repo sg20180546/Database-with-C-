@@ -27,6 +27,7 @@ int main(int argc,const char* argv[]){
             break;
         }
     while((found=sql.find(";"))==string::npos){
+        // string::npos == constant -1
         line=readline("");
         sql+="\n"+string(line);
         free(line);

@@ -19,7 +19,7 @@ private:
             db_name_=db;
         }
         ~IndexManager(){}
-        void CreateIndex(SQLCreateIndex &st)l
+        void CreateIndex(SQLCreateIndex &st)
 };
 
 class BPlusTree{

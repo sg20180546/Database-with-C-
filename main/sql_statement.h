@@ -68,6 +68,20 @@ public:
     void set_db_name(std::string dbname){db_name_=dbname;}
     void Parse(std::vector<std::string> sql_vector);
 };
+typedef struct{
+    int data_type;
+    std::string  value;
+}SQLValue;
 
+class SQLInsert:public SQL{
+private:
+    std::string tb_name_;
+    std::vector<SQLValue> values_;
+public:
+    SQLInsert(std::vector<std::string> sql_vector){Parse(sql_vector);}
+    void Parse(std::vector<std::string> sql_vector);
+    std::string tb_name(){return tb_name_;}
+    std::vector<SQLValue> &values(){return values_;}
+};
 
 #endif

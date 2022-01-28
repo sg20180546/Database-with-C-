@@ -63,6 +63,7 @@ void SQLCreateDatabase::Parse(std::vector<std::string> sql_vector){
 }
 
 void SQLCreateTable::Parse(std::vector<std::string> sql_vector){
+    // CREATE {TABLENAME} ((PRIMARY KEY) {columnname} char)
     sql_type_=31;
     unsigned int pos=2;
     bool is_attr=true;
@@ -152,5 +153,46 @@ void SQLUse::Parse(std::vector<std::string> sql_vector){
     }else{
         std::cout<<"DB NAME "<<sql_vector[1]<<std::endl;
         db_name_=sql_vector[1];
+    }
+}
+
+void SQLInsert::Parse(std::vector<std::string> sql_vector){
+    // "INSERT INTO {TABLENAME} ("
+    sql_type_=70;
+    unsigned int pos=1;
+    bool is_attr=true;
+    if(to_lower_copy(sql_vector[pos])!="into"){
+        throw SyntaxErrorException();
+    }
+    pos++;
+    cout<<"TABLE NAME: "<<sql_vector[pos]<<endl;
+    pos++;
+    if(to_lower_copy(sql_vector[pos])!="("){
+        throw SyntaxErrorException();
+    }
+    pos++;
+    while(is_attr){
+        is_attr=false;
+        SQLValue sql_value;
+        std::string value=sql_vector[pos];
+        if(value.at(0)='\''||value.at(0)=='\"'){
+            // ??
+            value.assign(value,1,value.length()-2);
+            sql_value.data_type=2;
+        }else{
+            if(value.find(".")!=string::npos){
+                sql_value.data_type=1;
+            }else{
+                sql_value.data_type=0;
+            }
+        }
+        sql_value.value=value;
+        cout<<sql_value.data_type<<" : "<<value<<endl;
+        pos++;
+        values_.push_back(sql_value);
+        if(sql_vector[pos]!=")"){
+            is_attr=true;
+        }
+        pos++;
     }
 }

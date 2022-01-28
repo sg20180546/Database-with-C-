@@ -10,6 +10,7 @@
 #include "exceptions.h"
 #include "minidb_api.h"
 #include "index_manager.h"
+#include "record_manager.h"
 using namespace std;
 // #include "catalog_manager.h"
 MiniDBAPI::MiniDBAPI(std::string p) : path_(p){cm_= new CatalogManager(p); }
@@ -103,5 +104,15 @@ void MiniDBAPI::Use(SQLUse &st){
     }
     curr_db_=st.db_name();
     hdl_=new BufferManager(path_);
-    // hdl=new buffermanger;
+}
+
+void MiniDBAPI::Insert(SQLInsert &st){
+    if(curr_db_.length()==0){
+        throw NoDatabaseSelectedException();
+    }
+    Database* db=cm_->GetDB(curr_db_);
+    if(db==NULL){
+        throw DataBaseNotExistException();
+    }
+
 }

@@ -24,6 +24,7 @@ public:
   void CreateTable(SQLCreateTable &st);
   void CreateIndex(SQLCreateIndex &st);
   void Use(SQLUse &st);
+  void Insert(SQLInsert &st);
 };
 
 #endif
