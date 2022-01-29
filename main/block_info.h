@@ -21,6 +21,7 @@ public:
     }
     virtual ~BlockInfo( delete[] data_; )
     FileInfo* file(){return file_;}
+    void set_file(FileInfo* f){file_=f;}
 };
 
 

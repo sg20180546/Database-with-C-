@@ -2,6 +2,7 @@
 #define MINIDB_BLOCK_HANDLE_H_
 
 #include "block_info.h"
+
 class BlockHandle{
 private:
     BlockInfo* first_block_;

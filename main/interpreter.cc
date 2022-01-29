@@ -167,7 +167,7 @@ void Interpreter::Run(){
             }
             case 70:{
                 SQLInsert* st=new SQLInsert(sql_vector_);
-                
+                api->Insert(*st);
                 delete st;
             }
             default:

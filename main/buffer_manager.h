@@ -3,14 +3,16 @@
 
 #include <string>
 #include "block_handle.h"
+#include "file_handle.h"
 
 class BufferManager{
 private:
     std::string path_;
     BlockHandle* bhandle_;
+    FileHandle *fhandle_;
 public:
     BufferManager(std::string p) 
-        : path_(p) {}
+        : path_(p), bhandle_(new BlockHandle(p)) {}
     ~BufferManager(){
 
     }

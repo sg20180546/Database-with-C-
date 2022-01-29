@@ -184,5 +184,9 @@ public:
         max_count_=0;
     }
     std::string name(){return name_;}
+    int rank(){return rank_;}
+
+
+    int IncreaseMaxCount(){return max_count_++;}
 };
 #endif /*dd*/

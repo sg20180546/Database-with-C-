@@ -30,6 +30,10 @@ void IndexManager::CreateIndex(SQLCreateIndex &st){
 
     tbl->AddIndex(idx);
 
-    BPlusTree tree(tbl->GetIndex(0),cm_,db_name_);
+    BPlusTree tree(tbl->GetIndex(0),hdl_,cm_,db_name_);
 }
 
+int BPlusTree::GetVal(Tkey key){
+    int ret=-1;
+    FindNodeParam fnp;
+}

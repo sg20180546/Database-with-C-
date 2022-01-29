@@ -114,5 +114,8 @@ void MiniDBAPI::Insert(SQLInsert &st){
     if(db==NULL){
         throw DataBaseNotExistException();
     }
+    RecordManager *rm = new RecordManager(cm_,hdl_,curr_db_);
+    rm->Insert(st);
+    delete rm;
 
 }

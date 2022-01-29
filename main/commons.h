@@ -5,4 +5,7 @@
 #define T_FLOAT 1
 #define T_CHAR 2
 
+#define FORMAT_RECORD 0
+#define FORMAT_INDEX 1
+
 #endif
