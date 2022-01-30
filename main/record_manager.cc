@@ -13,6 +13,7 @@ void RecordManager::Insert(SQLInsert &st){
         throw TableNotExistException();
     }
     int max_count=(4096-12)/(tbl->record_length());
+
     vector<Tkey> tkey_values;
     int pk_index=-1;
 
@@ -33,8 +34,10 @@ void RecordManager::Insert(SQLInsert &st){
             BPlusTree tree(tbl->GetIndex(0),hdl_,cm_,db_name_);
             int value=tree.GetVal(tkey_values[pk_index]);
             if(value!=-1){
-                
+                throw PrimaryKeyConflictException();
             }
+        }else{
+            
         }
     }
 }

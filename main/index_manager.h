@@ -72,6 +72,49 @@ private:
     void InitTree();
 };
 class BPlusTreeNode{
+
+private:
+    BPlusTree* tree_;
+    int block_num_;
+    int rank_;
+    // what is buffer?
+    char* buffer_;
+    bool is_leaf_;
+    bool is_new_node_;
+public:
+    BPlusTreeNode(bool isnew,BPlusTree* tree, int blocknum,bool newleaf=false);
+    ~BPlusTreeNode(){}
+    int block_num(){return block_num_;}
+    Tkey GetKeys(int i);
+    int GetValues(int i);
+    int GetNextLeaf();
+    int GetParent();
+    int GetNodeType();
+    int GetCount();
+    bool GetIsLeaf();
+
+    void SetKeys(int i,Tkey key);
+    void SetValues(int i, int val);
+    void SetNextLeaf(int val);
+    void SetParent(int val);
+    void SetNodeType(int val);
+    void SetCount(int val);
+    void SetIsLeaf(bool val);
+
+    void GetBuffer();
+
+    bool Search(Tkey key,int & index);
+    int Add(Tkey &key);
+    int Add(Tkey &key,int &val);
+    BPlusTreeNode *Split(Tkey &key);
+    bool IsRoot(){
+        if(GetParent()!=-1) return false;
+        return true;
+    }
+    bool RemoveAt(int indx);
+
+    void Print();
+
 };
 
 #endif

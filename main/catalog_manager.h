@@ -184,9 +184,83 @@ public:
         max_count_=0;
     }
     std::string name(){return name_;}
+    int key_type(){return key_type_;}
+    int key_len(){return key_len_;}
     int rank(){return rank_;}
-
-
+    int root(){return root_;}
     int IncreaseMaxCount(){return max_count_++;}
+};
+
+
+
+
+
+class Tkey{
+private:
+    int key_type_;
+    char* key_;
+    int length_;
+
+public:
+    Tkey(int keytype,int length){
+        key_type_=keytype;
+        if(keytype==2){
+            length_=length;
+        }
+        else{
+            length_=4;
+        }
+        key_=new char[length_];
+    }
+    Tkey(const Tkey &t1){
+        key_type_=t1.key_type_;
+        length_=t1.length_;
+        key_=new char[length_];
+        memcpy(key_,t1.key_,length_);
+    }
+    void ReadValue(const char* content){
+        switch(key_type_){
+            case 0:{
+                // int
+                int a=std::atoi(content);
+                memcpy(key_,&a,length_);
+            } break;
+            case 1:{
+                // flost
+                float a= std::atof(content);
+                memcpy(key_,&a,length_);
+            } break;
+            case 2:{
+                // char
+                memcpy(key_,content,length_);
+            } break;
+        }
+    }
+    void ReadValue(std::string str){
+        switch(key_type_){
+        switch(key_type_){
+            case 0:{
+                // int
+                int a=std::atoi(str.c_str());
+                memcpy(key_,&a,length_);
+            } break;
+            case 1:{
+                // flost
+                float a= std::atof(str.c_str());
+                memcpy(key_,&a,length_);
+            } break;
+            case 2:{
+                // char
+                memcpy(key_,str.c_str(),length_);
+            } break;
+        }
+        }
+    }
+    int key_type(){return key_type_;}
+    char* key(){return key_;}
+    int length(){return length_;}
+    ~Tkey(){
+        if(key_!=NULL) delete[] key_;
+    }
 };
 #endif /*dd*/

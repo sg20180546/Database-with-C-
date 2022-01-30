@@ -33,7 +33,125 @@ void IndexManager::CreateIndex(SQLCreateIndex &st){
     BPlusTree tree(tbl->GetIndex(0),hdl_,cm_,db_name_);
 }
 
+//  BplusTree
+
+void BPlusTree::InitTree(){
+    BPlusTreeNode *root_node=new BPlusTreeNode(true,this,GetNewBlockNum(),true);
+    // 
+}
+
 int BPlusTree::GetVal(Tkey key){
     int ret=-1;
-    FindNodeParam fnp;
+    FindNodeParam fnp=Search(idx_->root(),key);
+    if(fnp.flag){
+        ret=fnp.pnode->GetValues(fnp.index);
+    }
+    return ret;
+}
+
+FindNodeParam BPlusTree::Search(int node,Tkey &key){
+    FindNodeParam ret;
+    int index=0;
+    BPlusTreeNode* pnode=GetNode(node);
+    if(pnode->Search(key,index)){
+        if(pnode->GetIsLeaf()){
+            ret.flag=true;
+            ret.index=index;
+            ret.pnode=pnode;
+        }else{
+            pnode=GetNode(pnode->GetValues(index));
+        }
+    }
+
+
+    return ret;
+}
+BPlusTreeNode* BPlusTree::GetNode(int num){
+    BPlusTreeNode * pnode=new BPlusTreeNode(false,this,num);
+    return pnode;
+}
+
+bool BPlusTreeNode::Search(Tkey key,int &index){
+    bool ret=false;
+    if(GetCount()==0){
+        index=0;
+        return false;
+    }
+    if(GetKeys(0) > key ){
+        index=0;
+        return false;
+    }
+    if(GetKeys(GetCount()-1)<key){
+        index=GetCount();
+        return false;
+    }
+    if(GetCount()>20){
+        int m,s,e;
+        s=0;
+        e=GetCount()-1;
+        while(s<e){
+            m=(s+e)/2;
+            if(key==GetKeys(m)){
+                index=m;
+                return true;
+            }else if(key<GetKeys(m)){
+                e=m;
+            }else{
+                s=m;
+            }
+            if(s==e-1){
+                if(key==GetKeys(s)){
+                    index=s;
+                    return true;
+                }
+                if(key==GetKeys(e)){
+                    index=e;
+                    return true;
+                }
+                if(key<GetKeys(s)){
+                    index=s;
+                    return false;
+                }
+                if(key<GetKeys(e)){
+                    index=e;
+                    return false;
+                }
+                if(key>GetKeys(e)){
+                    index=e+1;
+                    return false;
+                }
+            }
+
+        }
+        return false;
+    }else{
+        for(int i=0;i<GetCount();i++){
+            if(key<GetKeys(i)){
+                index=i;
+                ret=false;
+                break;
+            }else if(key==GetKeys(i)){
+                index=i;
+                ret=true;
+                break;
+            }
+        }
+        return ret;
+    }
+}
+int BPlusTreeNode::GetCount(){return *((int*)(&buffer_[4]));}
+bool BPlusTreeNode::GetIsLeaf(){return GetNodeType()==1;}
+int BPlusTreeNode::GetNodeType(){
+    int val;
+    val=*((int*)(&buffer_[0]));
+    return val;
+}
+
+
+Tkey BPlusTreeNode::GetKeys(int index){
+    Tkey k(tree_->idx()->key_type(),tree_->idx()->key_len());
+    int base=12;
+    int lenr=4+tree_->idx()->key_len();
+    memcpy(k.key(),&buffer_[base+index*lenr+4],tree_->idx()->key_len());
+    return k;
 }

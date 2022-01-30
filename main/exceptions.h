@@ -20,4 +20,6 @@ class OneIndexEachTableException: public std::exception{};
 class IndexAlreadyExistsException: public std::exception{};
 
 class IndexMustBeCreatedOnPKException: public std::exception{};
+
+class PrimaryKeyConflictException:public std::exception{};
 #endif

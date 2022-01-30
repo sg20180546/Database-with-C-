@@ -87,7 +87,7 @@ void MiniDBAPI::CreateIndex(SQLCreateIndex &st){
     if(db->CheckIfIndexExists(st.index_name())){
         throw IndexAlreadyExistsException();
     }
-    IndexManager *im=new IndexManager(cm_,curr_db_);
+    IndexManager *im=new IndexManager(cm_,hdl_,curr_db_);
     im->CreateIndex(st);
     delete im;
 }
