@@ -78,6 +78,60 @@ public:
     ~Tkey(){
         if(key_!=NULL) delete[] key_;
     }
+    friend std::ostream &operator<<(std::ostream &out , const Tkey &object);
+
+    bool operator<(const Tkey t1){
+        switch (t1.key_type_){
+            case 0:
+                return *(int *)key_<*(int*)t1.key_;
+            case 1:
+                return *(float*)key_<*(float*)t1.key_;
+            case 2:
+                return (strncmp(key_,t1.key_,length_)<0);
+            default:
+                return false;
+        }
+    }
+    bool operator>(const Tkey t1){
+        switch (t1.key_type_){
+            case 0:
+                return *(int *)key_>*(int*)t1.key_;
+            case 1:
+                return *(float*)key_>*(float*)t1.key_;
+            case 2:
+                return (strncmp(key_,t1.key_,length_)>0);
+            default:
+                return false;
+        }     
+    }
+    bool operator<=(const Tkey t1){return !(operator>(t1)); }
+    bool operator>=(const Tkey t1){return !(operator<(t1)); }
+
+    bool operator==(const Tkey t1){
+        switch (t1.key_type_){
+            case 0:
+                return *(int *)key_==*(int*)t1.key_;
+            case 1:
+                return *(float*)key_==*(float*)t1.key_;
+            case 2:
+                return (strncmp(key_,t1.key_,length_)==0);
+            default:
+                return false;
+        }        
+    }
+
+    bool operator!=(const Tkey t1){
+        switch (t1.key_type_){
+            case 0:
+                return *(int *)key_!=*(int*)t1.key_;
+            case 1:
+                return *(float*)key_!=*(float*)t1.key_;
+            case 2:
+                return (strncmp(key_,t1.key_,length_)!=0);
+            default:
+                return false;
+        }        
+    }
 };
 
 

@@ -25,8 +25,12 @@ public:
         :db_name_(db),type_(tp),file_name_(file),record_amount_(reca),
         record_length_(recl),first_block_(firb),next_(nex) {}
     ~FileInfo(){}
+
+    FileInfo* next(){return next_;}
+    BlockInfo* first_block(){return first_block_;}
     std::string db_name(){return db_name_;}
     int type(){return type_;}
     std::string file_name(){return file_name_;}
+
 };
 #endif

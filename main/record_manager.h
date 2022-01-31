@@ -16,6 +16,8 @@ public:
     : cm_(cm),hdl_(hdl),db_name_(db) {}
     ~RecordManager(){}
     void Insert(SQLInsert &st);
+    BlockInfo* GetBlockInfo(Table* tbl,int block_num);
+    std::vector<Tkey> GetRecord(Table*tbl,int block_num,int offset);
 };
 
 #endif

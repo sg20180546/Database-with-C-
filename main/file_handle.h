@@ -1,5 +1,5 @@
-#ifndef MINIDB_FILE_INFO_H_
-#define MINIDB_FILE_INFO_H_
+#ifndef MINIDB_FILE_HANDLE_H_
+#define MINIDB_FILE_HANDLE_H_
 
 #include <string>
 
@@ -13,6 +13,7 @@ private:
 public:
     FileHandle(std::string p) : first_file_(new FileInfo() ) ,path_(p){}
     ~FileHandle();
+    void IncreaseAge();
 };
 
 #endif

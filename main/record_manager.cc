@@ -5,6 +5,13 @@
 
 #include "index_manager.h"
 using namespace std;
+
+BlockInfo* RecordManager::GetBlockInfo(Table* tbl,int block_num){
+    if(block_num==-1) return NULL;
+    BlockInfo* block=hdl_->GetFileBlock(db_name_,tbl->tb_name(),0,block_num);
+    return block;
+}
+
 void RecordManager::Insert(SQLInsert &st){
     string tb_name=st.tb_name();
     unsigned long values_size=st.values().size();
@@ -37,7 +44,37 @@ void RecordManager::Insert(SQLInsert &st){
                 throw PrimaryKeyConflictException();
             }
         }else{
-            
-        }
+            int block_num=tbl->first_block_num();
+            for(int i=0;i<tbl->block_count();++i){
+                BlockInfo *bp=GetBlockInfo(tbl,block_num);
+                for(int j=0;j<bp->GetRecordCount();++j){
+                    vector<Tkey> tkey_value=GetRecord(tbl,block_num,j);
+                    if(tkey_value[pk_index] == tkey_values[pk_index]){
+                        throw PrimaryKeyConflictException();
+                    }
+                }
+                block_num=bp->GetNextBlockNUm();
+            }
+        }   
     }
+
+    char* content;
+
+
+}
+
+std::vector<Tkey> RecordManager::GetRecord(Table* tbl, int block_num, int offset){
+    vector<Tkey> keys;
+    BlockInfo*bp=GetBlockInfo(tbl,block_num);
+    char* content=bp->data()+ offset *tbl->record_length()+12;
+    for(int i=0;i<tbl->GetAttributeNum();++i){
+        int value_type=tbl->ats()[i].data_type();
+        int length=tbl->ats()[i].length();
+        
+        Tkey tmp(value_type,length);
+        memcpy(tmp.key(),content,length);
+        keys.push_back(tmp);
+        content+=length;
+    }
+    return keys;
 }

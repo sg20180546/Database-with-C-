@@ -12,6 +12,23 @@ using namespace boost::algorithm;
 using namespace std;
 
 
+std::ostream &operator<<(std::ostream &out, const Tkey &object){
+    switch(object.key_type_){
+        case 0:{
+        }break;
+        case 1:{
+            float a;
+            memcpy(&a,object.key_,object.length_);
+            cout<<setw(9)<<left<<a;
+        } break;
+        case 2:{
+            cout<<setw(9)<<left<<object.key_;
+        } break;
+    }
+    return out;
+}
+
+
 int SQL::ParseDataType(std::vector<std::string> sql_vector,Attribute &attr,unsigned int pos){
     boost::algorithm::to_lower(sql_vector[pos]);
     if(sql_vector[pos]=="int"){

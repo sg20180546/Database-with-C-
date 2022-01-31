@@ -19,9 +19,15 @@ public:
     BlockInfo(int num): dirty_(false),next_(NULL),file_(NULL),age_(0),block_num_(num){
         data_=new char[4*1024];
     }
-    virtual ~BlockInfo( delete[] data_; )
+    virtual ~BlockInfo(){ delete[] data_;}
     FileInfo* file(){return file_;}
     void set_file(FileInfo* f){file_=f;}
+    void IncreaseAge(){++age_;}
+    BlockInfo* next(){return next_;}
+    char* data(){ return data_;}
+//  ??? string to int?
+    int GetRecordCount(){return *(int *)(data_ + 8);}
+    int GetNextBlockNUm(){return *(int*)(data_+4);}
 };
 
 

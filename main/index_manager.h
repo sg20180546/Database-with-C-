@@ -9,6 +9,7 @@
 class BPlusTree;
 class BPlusTreeNode;
 // https://velog.io/@mongle/Data-structure-B-tree-B-tree
+// https://velog.io/@emplam27/자료구조-그림으로-알아보는-B-Tree
 class IndexManager{
 private:
     BufferManager *hdl_;
